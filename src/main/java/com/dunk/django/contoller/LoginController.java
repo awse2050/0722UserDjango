@@ -21,38 +21,43 @@ import lombok.extern.log4j.Log4j2;
 public class LoginController {
 
     private final MemberCheckService service;
-    
+
+    // 로그인창 들어가기
     @GetMapping("/login")
-    public void login(){
+    public void login() {
         log.info("================/login================");
     }
 
+    // 로그인 창에서 정보 입력
     @PostMapping("/login")
     public void postLogin(DjangoMember member, Model model) {
         log.info("================/Post login================");
         log.info(member);
         UserDetails findMember = service.loadUserByUsername(member.getId());
 
-         log.info(findMember);
+        log.info(findMember);
 
-         model.addAttribute("userId", member.getId());
+        model.addAttribute("userId", member.getId());
     }
 
+    // 회원가입창으로 들어가기.
     @GetMapping("/signup")
     public void signUp() {
         log.info("================/signup================");
     }
 
+    // 회원가입창에서 정보 입력 후
     @PostMapping("/signup")
     public String postSignUp(DjangoMember member) {
         log.info("================POST -- /signup================");
         log.info(member);
 
         service.register(member);
-        
+
         return "redirect:/django/index";
     }
 
+    // 로그아웃 이후 URL 이동
     @GetMapping("/logout")
     public String logout() {
         return "redirect:/member/login";

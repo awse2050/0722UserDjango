@@ -1,16 +1,12 @@
 package com.dunk.django.contoller;
 
-import com.dunk.django.domain.Recipe;
-import com.dunk.django.dto.GenericListDTO;
 import com.dunk.django.dto.PageDTO;
-import com.dunk.django.dto.RecipeDTO;
 import com.dunk.django.service.RecipeService;
 import com.dunk.django.service.UserFridgeService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,10 +29,10 @@ import lombok.extern.log4j.Log4j2;
 public class IndexController {
 
     private final RecipeService service;
-
     // 추가
     private final UserFridgeService fridgeService;
 
+    // 메인페이지 들어가기
     @GetMapping("/index")
     public void index(@ModelAttribute("pageDTO") PageDTO pageDTO, Authentication auth, Model model) {
         log.info("===============================INDEX==================================");
@@ -47,6 +43,7 @@ public class IndexController {
     }
 
     // ------------------추가-------------------
+    // 마이 냉장고 페이지 들어가기
     @GetMapping("/myFridge")
     public void getMyFridge(Authentication auth, Model model) {
         log.info("================get My Fridge==============");
@@ -81,11 +78,4 @@ public class IndexController {
         fridgeService.remove(fno);
         return new ResponseEntity<String>("success", HttpStatus.OK);
     }
-
-    @PostMapping("/crawling")
-    public void postTest() {
-        log.info("==========================================================================");
-        log.info("POST CRAWLING ============================================================");
-    }
-
 }

@@ -23,9 +23,10 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @RequestMapping("/board")
 public class BoardController {
-
+    // 주입
     private final BoardService service;
 
+    // 자유게시판 전체 보기
     @GetMapping("/list")
     public void list(@ModelAttribute("pageDTO") PageDTO pageDTO, Model model) {
 
@@ -36,15 +37,18 @@ public class BoardController {
         model.addAttribute("result", result);
     }
 
+    // 게시물 등록 창 가기
     @GetMapping("/register")
     public void register(@ModelAttribute("pageDTO") PageDTO pageDTO, Authentication auth, Model model) {
         log.info("/register.....................");
+        // 로그인 했을 때만 정보를 전달
         if (auth != null) {
             log.info(auth.getName());
             model.addAttribute("username", auth.getName());
         }
     }
 
+    // 게시물 등록시
     @PostMapping("/register")
     public String register(BoardDTO dto, RedirectAttributes rttr) {
         log.info("POST Register.....................");
@@ -57,6 +61,7 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
+    // 게시물 보기 혹은 수정 창으로
     @GetMapping({ "/get", "/modify" })
     public void get(Authentication auth, Long bno, @ModelAttribute("pageDTO") PageDTO pageDTO, Model model) {
         log.info("/get.................");
@@ -66,6 +71,7 @@ public class BoardController {
         model.addAttribute("get", service.get(bno));
     }
 
+    // 게시물 수정 창에서 수정시.
     @PostMapping("/modify")
     public String modify(BoardDTO dto, @ModelAttribute("pageDTO") PageDTO pageDTO, RedirectAttributes rttr) {
         log.info("POST MODIFY------------------------------------------");
@@ -79,6 +85,7 @@ public class BoardController {
         return "redirect:/board/get";
     }
 
+    // 게시물 제거시
     @PostMapping("/remove")
     public String remove(Long bno) {
         log.info("/remove...........................");

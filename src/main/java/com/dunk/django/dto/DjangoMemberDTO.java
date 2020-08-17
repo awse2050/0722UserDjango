@@ -21,9 +21,10 @@ public class DjangoMemberDTO extends User {
 
     private String name;
 
-    public DjangoMemberDTO(Long userId,String username, String password, String name, Collection<? extends GrantedAuthority> authorities) {
+    public DjangoMemberDTO(Long userId, String username, String password, String name,
+            Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
- 
+
         this.name = name;
     }
 }

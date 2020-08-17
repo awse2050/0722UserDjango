@@ -5,10 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.StringJoiner;
-import com.dunk.django.domain.Recipe;
 import com.dunk.django.domain.UserFridge;
 import com.dunk.django.dto.RecipeDTO;
-import com.dunk.django.service.RecipeService;
 import com.dunk.django.service.UserFridgeService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -23,9 +21,10 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @RequiredArgsConstructor
 public class CrawlingController {
-
+    // 자동주입
     private final UserFridgeService fridgeService;
 
+    // 로그인 했을 경우 크롤링 후 레시피 보여주기
     @GetMapping("/crawling")
     public String crawling(@RequestParam("username") String username) {
         log.info("=================================================");
@@ -34,7 +33,8 @@ public class CrawlingController {
         ingr.forEach(row -> {
             log.info(row.getIngr_name());
             /* 크롤링할 URL */
-            String URL = "https://www.10000recipe.com/recipe/list.html?q=" + fridgeService.searchCategory(row.getIngr_name());
+            String URL = "https://www.10000recipe.com/recipe/list.html?q="
+                    + fridgeService.searchCategory(row.getIngr_name());
             Document doc = null;
             List<String> list = new ArrayList<>(); // img src를 담을 list
             List<String> imgList = new ArrayList<>(); // 불필요한 src를 뺀 list

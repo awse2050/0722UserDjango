@@ -1,7 +1,6 @@
 package com.dunk.django.repository;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.dunk.django.domain.Recommend;
 

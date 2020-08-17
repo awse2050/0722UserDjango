@@ -148,13 +148,12 @@ public class OCRController {
         } catch (Exception e) {
           e.printStackTrace();
         }
-
       }
     }
 
     rttr.addAttribute("username", auth.getName());
 
-    return "redirect:http://192.168.1.4:8080/crawling";
+    return "redirect:http://localhost:8080/crawling";
   }
 
   // 특수문자 and 숫자 제거
